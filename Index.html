@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFP Bioscience Application: Derivatives in Food Processing</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts for Clean UX -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #e8f5e9;
+            --secondary: #d32f2f;
+            --text-main: #2c3e50;
+            --bg-subtle: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        .badge {
+            background-color: var(--primary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        h1 { color: var(--primary); margin-top: 10px; margin-bottom: 5px; }
+        h2 { color: var(--primary); border-left: 4px solid var(--primary); padding-left: 10px; font-size: 1.4rem; }
+
+        .meta-source {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            background: var(--bg-subtle);
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        @media (min-width: 768px) {
+            .grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        .math-box {
+            background: var(--primary-light);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .math-formula {
+            font-size: 1.2rem;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            color: #1b5e20;
+            margin: 10px 0;
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .chart-container {
+            position: relative;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+
+        .interactive-panel {
+            background: #fff;
+            border: 2px dashed var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-panel.active {
+            background-color: #fffde7;
+            border-color: #fbc02d;
+        }
+
+        .result-val {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .explanation-text {
+            font-style: italic;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .instruction-tip {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <span class="badge">Program Code: SFP (Agro Product Technology)</span>
+        <h1>Bio-Extract Processing Rate Evaluator</h1>
+        <p>Analyzing Thermal Extraction & Degradation Kinetics via Calculus Derivatives</p>
+        <div class="meta-source">
+            <strong>Data Framework Reference:</strong> Baselines inspired by Malaysian post-harvest research parameters found in <em>"Agro-Product Processing Technology: Principles and Practice"</em> (Routledge) & Universiti Malaysia Kelantan (UMK) Faculty of Agro-Based Industry curriculum briefs.
+        </div>
+    </header>
+
+    <div class="grid">
+        <!-- Left Side: Problem Statement & Math -->
+        <div>
+            <h2>1. The Bioscience Scenario</h2>
+            <p>During the thermal processing of local ginger/turmeric extracts, food technologists must balance maximizing the yield of heat-sensitive bioactive compounds against structural thermal degradation.</p>
+            <p>Let <strong>f(x)</strong> represent the cumulative concentration of the extracted compound in milligrams per Liter (mg/L), where <strong>x</strong> is the processing time in minutes.</p>
+
+            <div class="math-box">
+                <h3>Mathematical Modeling</h3>
+                <p>The yield over a 60-minute cycle fits a cubic polynomial curve:</p>
+                <div class="math-formula">f(x) = -0.004x³ + 0.18x² + 2x</div>
+                
+                <p>Applying the <strong>Power Rule of Derivatives</strong> ($d/dx [x^n] = n \cdot x^{n-1}$), the instantaneous extraction rate <strong>f'(x)</strong> (mg/L per minute) is:</p>
+                <div class="math-formula">f'(x) = -0.012x² + 0.36x + 2</div>
+            </div>
+        </div>
+
+        <!-- Right Side: Interactive Panel -->
+        <div>
+            <h2>2. Interactive Rate Analysis</h2>
+            <p class="instruction-tip">💡 <strong>Action:</strong> Click anywhere on the line chart graph below to capture the processing timestamp and calculate the precise derivative.</p>
+            
+            <div class="interactive-panel" id="calcPanel">
+                <div id="promptText"><em>No point selected yet. Click on the chart curve below!</em></div>
+                <div id="resultsContent" style="display:none;">
+                    <div>At Processing Time: <strong id="timeVal">0</strong> minutes</div>
+                    <div class="result-val" id="derivVal">+0.00 mg/L/min</div>
+                    <div class="explanation-text" id="laymanText"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr style="border:0; border-top: 1px solid #ddd; margin: 30px 0;">
+
+    <!-- Bottom: Chart Integration -->
+    <h2>3. Real-Time Processing Curve</h2>
+    <div class="chart-container">
+        <canvas id="rateChart" height="120"></canvas>
+    </div>
+</div>
+
+<script>
+    // Generate data points for the curves based on formulas
+    const labels = [];
+    const yieldData = [];
+    const derivativeData = [];
+
+    for (let x = 0; x <= 55; x += 2) {
+        labels.push(x);
+        // f(x) = -0.004x^3 + 0.18x^2 + 2x
+        let y = (-0.004 * Math.pow(x, 3)) + (0.18 * Math.pow(x, 2)) + (2 * x);
+        yieldData.push(y.toFixed(2));
+    }
+
+    const ctx = document.getElementById('rateChart').getContext('2d');
+    const rateChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Bioactive Compound Yield f(x) [mg/L]',
+                data: yieldData,
+                borderColor: '#2e7d32',
+                backgroundColor: 'rgba(46, 125, 50, 0.05)',
+                borderWidth: 3,
+                tension: 0.3,
+                fill: true,
+                pointRadius: 4,
+                pointHoverRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        footer: function() { return 'Click point to calculate f\'(x)'; }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    title: { display: true, text: 'Processing / Extraction Time (Minutes)', font: { weight: 'bold' } }
+                },
+                y: {
+                    title: { display: true, text: 'Concentration (mg/L)', font: { weight: 'bold' } },
+                    min: 0
+                }
+            },
+            // Handle User Clicks to calculate Derivatives dynamically
+            onClick: (e, elements) => {
+                if (elements.length > 0) {
+                    const index = elements[0].index;
+                    const xVal = rateChart.data.labels[index];
+                    
+                    // Calculate f'(x) = -0.012x^2 + 0.36x + 2
+                    const deriv = (-0.012 * Math.pow(xVal, 2)) + (0.36 * xVal) + 2;
+                    
+                    updateUI(xVal, deriv);
+                }
+            }
+        }
+    });
+
+    function updateUI(x, deriv) {
+        const panel = document.getElementById('calcPanel');
+        document.getElementById('promptText').style.display = 'none';
+        document.getElementById('resultsContent').style.display = 'block';
+        panel.classList.add('active');
+
+        document.getElementById('timeVal').innerText = x;
+        
+        let formattedDeriv = (deriv >= 0 ? "+" : "") + deriv.toFixed(3);
+        const derivEl = document.getElementById('derivVal');
+        derivEl.innerText = formattedDeriv + " mg/L/min";
+
+        let explanation = "";
+        if (deriv > 0.8) {
+            derivEl.style.color = "#2e7d32";
+            explanation = `🚀 <strong>Rapid Extraction Phase:</strong> At ${x} minutes, the heat is effectively breaking plant cell walls open. Compounds are rushing into the solvent fluid much faster than they are breaking down. Highly efficient production zone!`;
+        } else if (deriv > 0 && deriv <= 0.8) {
+            derivEl.style.color = "#ffa000";
+            explanation = `⚠️ <strong>Slowing Yield:</strong> The extraction rate is slowing down drastically. You are approaching the maximum threshold capacity of the fluid. Yield is still creeping up, but thermal stress is accumulating.`;
+        } else if (Math.abs(deriv) <= 0.1) {
+            derivEl.style.color = "#607d8b";
+            explanation = `🛑 <strong>The Sweet Spot (Optimal Point):</strong> The derivative is effectively zero ($f'(x) \\approx 0$). This marks the absolute peak concentration. Leaving the batch in the extractor past this exact moment will cause loss of product quality!`;
+        } else {
+            derivEl.style.color = "#d32f2f";
+            explanation = `🔥 <strong>Thermal Degradation:</strong> The rate is negative ($f'(x) < 0$). At ${x} minutes, the extreme heat is destroying and burning off the bioactive compounds faster than you can extract them. You are wasting energy and ruining product quality!`;
+        }
+
+        document.getElementById('laymanText').innerHTML = explanation;
+    }
+</script>
+
+</body>
+</html>
